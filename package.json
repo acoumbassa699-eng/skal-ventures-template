@@ -1,0 +1,19 @@
+{
+  "name": "@skalventures/monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SKAL Ventures Monorepo - Frontend and Backend Services",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:openhands-ui": "pnpm --filter @skalventures/agent-canvas dev",
+    "build": "pnpm -r build",
+    "build:openhands-ui": "pnpm --filter @skalventures/agent-canvas build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "clean": "pnpm -r clean"
+  },
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=9.0.0"
+  }
+}

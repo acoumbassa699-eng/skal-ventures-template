@@ -1,0 +1,35 @@
+# SKAL Ventures Agent Engine Docker Compose Configuration
+
+version: "3.8"
+
+services:
+  skal-agent-engine:
+    image: ghcr.io/acoumbassa699-eng/skalventures-engine:${VERSION:-latest}
+    container_name: skal-agent-engine
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - LLM_API_KEY=${LLM_API_KEY}
+      - LLM_BASE_URL=${LLM_BASE_URL:-https://api.openai.com/v1}
+      - LLM_MODEL=${LLM_MODEL:-gpt-4}
+      - SANDBOX_runtime=docker
+      - WORKSPACE_DIR=/workspace
+    volumes:
+      - skal-data:/workspace
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - skal-network
+
+networks:
+  skal-network:
+    driver: bridge
+
+volumes:
+  skal-data:
+    driver: local
